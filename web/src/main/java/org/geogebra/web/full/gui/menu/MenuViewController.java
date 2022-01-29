@@ -12,6 +12,7 @@ import org.geogebra.common.gui.menu.MenuItemGroup;
 import org.geogebra.common.gui.menu.impl.DefaultDrawerMenuFactory;
 import org.geogebra.common.gui.menu.impl.ExamDrawerMenuFactory;
 import org.geogebra.common.gui.menu.impl.MebisDrawerMenuFactory;
+import org.geogebra.common.gui.menu.impl.MoodleDrawerMenuFactory;
 import org.geogebra.common.move.events.BaseEvent;
 import org.geogebra.common.move.ggtapi.events.LogOutEvent;
 import org.geogebra.common.move.ggtapi.events.LoginEvent;
@@ -159,6 +160,8 @@ public class MenuViewController implements ResizeHandler, EventRenderable, SetLa
 			GeoGebraConstants.Version version) {
 		if (app.isMebis()) {
 			return new MebisDrawerMenuFactory(app.getPlatform(), version, app.getLoginOperation());
+		} else if (app.isMoodle()) {
+			return new MoodleDrawerMenuFactory(app.getPlatform(), version, app.getLoginOperation());
 		} else {
 			boolean addAppSwitcher = app.isSuite();
 			return new DefaultDrawerMenuFactory(
@@ -192,6 +195,7 @@ public class MenuViewController implements ResizeHandler, EventRenderable, SetLa
 	private boolean hasLoginButton(AppW app) {
 		return app.getConfig().getVersion() != GeoGebraConstants.Version.SCIENTIFIC
 				&& (!app.isMebis())
+				&& (!app.isMoodle())
 				&& app.enableFileFeatures()
 				&& app.getLAF().hasLoginButton();
 	}
