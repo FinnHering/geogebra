@@ -3349,6 +3349,11 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 	}
 
 	@Override
+	public boolean isMoodle() {
+		return "moodle".equalsIgnoreCase(appletParameters.getParamVendor());
+	}
+
+	@Override
 	public DefaultSettings getDefaultSettings() {
 		if (defaultSettings == null) {
 			defaultSettings = new DefaultSettingsW();

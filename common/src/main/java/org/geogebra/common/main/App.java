@@ -3861,6 +3861,10 @@ public abstract class App implements UpdateSelection, AppInterface, EuclidianHos
 		return false;
 	}
 
+	public boolean isMoodle() {
+		return false;
+	}
+
 	public boolean isUnbundledOrWhiteboard() {
 		return isUnbundled() || isWhiteboardActive();
 	}
