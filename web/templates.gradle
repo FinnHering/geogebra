@@ -77,7 +77,7 @@ ext.appHtml = { app, prerelease, offline = false, inlineCss = false ->
     def vendor = app.vendor ?: "GeoGebra"
     def appID = app.id.split("-")[0]
     def appTransKey = app.transKey
-    def header = vendor == "Mebis" ? "" : template("app-header-beta.html")
+    def header = vendor == "Mebis" || vendor == "Moodle" ? "" : template("app-header-beta.html")
             .replace("<!--LOGO-LINK-->", offline ? "#" : "https://www.geogebra.org")
     header = header.replace("<!--PICKER-->", offline ? "" : template("partials/picker.html"))
     header = partials(header, app.partials)
