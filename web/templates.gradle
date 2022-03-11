@@ -32,7 +32,7 @@ def partials = { code, appPartials ->
 def replaceVendor = { htmlContent, vendor ->
     return htmlContent.replace("<!--VENDOR-->", vendor)
             .replace("<!--VENDOR SCRIPTS-->", template("partials/vendor-scripts-${vendor.toLowerCase()}.html"))
-            .replace("<!--PRECONNECT-->", vendor == "Mebis" ? "" : template("partials/preconnect.html"))
+            .replace("<!--PRECONNECT-->", vendor == "Mebis" || vendor == "Moodle" ? "" : template("partials/preconnect.html"))
 }
 
 def getCss = { ->

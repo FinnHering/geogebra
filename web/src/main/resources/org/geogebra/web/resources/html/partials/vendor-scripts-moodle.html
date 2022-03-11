@@ -1,5 +1,6 @@
 <script>
     defaultParams.id = "notesApplet";
+    defaultParams.backendUrl="https://tafel.mebis.bayern.de/api"
 
     function ggbAppletOnLoad(){
         window.parent.postMessage("{\"action\":\"appletOnLoad\"}","*");
