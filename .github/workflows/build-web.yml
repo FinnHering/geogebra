@@ -32,7 +32,9 @@ jobs:
         password: ${{ secrets.GITLAB_PASSWORD }}
         
     # Build web
-    - run ./gradlew :web:deployIntoWar --no-daemon
+    - 
+      name: Building web 
+      run: ./gradlew :web:deployIntoWar --no-daemon
     
     # Build docker and publish to registry
     -
@@ -41,4 +43,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: user/app:latest
+        tags: registry.hering.sh/selessa/geogebra-notes-moodle-integration/geogebra
