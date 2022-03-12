@@ -11,6 +11,8 @@ jobs:
     # setup docker and java
     - name: Checking out repo
       uses: actions/checkout@v2
+      with:
+        ref: moodle-notes
     
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
