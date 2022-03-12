@@ -32,6 +32,10 @@ jobs:
         username: ${{ secrets.GITLAB_USERNAME }}
         password: ${{ secrets.GITLAB_PASSWORD }}
         
+    # Setup gradle for improved caching
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+    
     # Build web
     - name: Building web 
       run: ./gradlew :web:deployIntoWar --no-daemon
