@@ -106,11 +106,7 @@ import org.geogebra.web.html5.gui.LoadingApplication;
 import org.geogebra.web.html5.gui.ToolBarInterface;
 import org.geogebra.web.html5.gui.accessibility.AccessibilityManagerW;
 import org.geogebra.web.html5.gui.accessibility.AccessibilityView;
-import org.geogebra.web.html5.gui.laf.GLookAndFeelI;
-import org.geogebra.web.html5.gui.laf.GgbSettings;
-import org.geogebra.web.html5.gui.laf.MebisSettings;
-import org.geogebra.web.html5.gui.laf.SignInControllerI;
-import org.geogebra.web.html5.gui.laf.VendorSettings;
+import org.geogebra.web.html5.gui.laf.*;
 import org.geogebra.web.html5.gui.tooltip.ToolTipManagerW;
 import org.geogebra.web.html5.gui.util.BrowserStorage;
 import org.geogebra.web.html5.gui.util.LayoutUtilW;
@@ -3317,6 +3313,8 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 		if (vendorSettings == null) {
 			if (isMebis()) {
 				vendorSettings = new MebisSettings();
+			} else if (isMoodle()) {
+				vendorSettings = new MoodleSettings();
 			} else {
 				vendorSettings = new GgbSettings();
 			}
@@ -3327,6 +3325,11 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 	@Override
 	public boolean isMebis() {
 		return "mebis".equalsIgnoreCase(appletParameters.getParamVendor());
+	}
+
+	@Override
+	public boolean isMoodle() {
+		return "moodle".equalsIgnoreCase(appletParameters.getParamVendor());
 	}
 
 	@Override

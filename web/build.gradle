@@ -94,7 +94,9 @@ ext.appSpecs = [
          releases: 'Releases-notes', icon: 'notes.ico', measurementId: 'G-MWHBRQSXTL',
          firebaseAppId: '1:895270214636:web:aece5066924cacb084fec9', 'hotjar': true],
     [id:'notes-mebis', title:'Tafel', transKey: 'Tafel', exe:'MebisTafel', pkg:'Mebis_Tafel',
-         icon: 'notes.ico', vendor: "Mebis"]]
+         icon: 'notes.ico', vendor: "Mebis"],
+    [id:'notes-moodle', title:'Tafel', transKey: 'Tafel', exe:'MoodleTafel', pkg:'Moodle_Tafel',
+     icon: 'notes.ico', vendor: "Moodle"]]
 
 compileSass {
     // Directory where to output generated CSS:
@@ -204,7 +206,7 @@ def createHtml = { inlineCss ->
         def replaceHtml = app.id == "classic" ? classicHtml : appHtml
         file("war/${app.id}-offline.html").text = english(replaceHtml(app, false, true, inlineCss), app.title)
         file("war/${app.id}.html").text = english(replaceHtml(app, true, false, inlineCss), app.title)
-        if (app.vendor == "Mebis") {
+        if (app.vendor == "Mebis" || app.vendor == "Moodle") {
             file("war/${app.id}-template.html").text = replaceHtml(app, false).replace("<!--CODEBASE-->", "/")
         }
     }
