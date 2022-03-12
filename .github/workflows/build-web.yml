@@ -1,0 +1,49 @@
+name: Build Web
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # setup docker and java
+    - name: Checking out repo
+      uses: actions/checkout@v2
+    
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      
+    - name: Install Java 11
+      uses: actions/setup-java@v3.0.0
+      with:
+        distribution: 'microsoft'
+        java-version: '11'
+        cache: 'gradle'
+
+    - name: Login to GitLab registry
+      uses: docker/login-action@v1
+      with:
+        registry: registry.hering.sh
+        username: ${{ secrets.GITLAB_USERNAME }}
+        password: ${{ secrets.GITLAB_PASSWORD }}
+        
+    # Setup gradle for improved caching
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+    
+    # Build web
+    - name: Building web 
+      run: ./gradlew :web:deployIntoWar --no-daemon
+    
+    # Build docker and publish to registry
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: registry.hering.sh/selessa/geogebra-notes-moodle-integration/geogebra

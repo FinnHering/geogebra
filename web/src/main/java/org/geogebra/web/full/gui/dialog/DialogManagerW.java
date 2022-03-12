@@ -38,7 +38,7 @@ import org.geogebra.common.util.debug.Log;
 import org.geogebra.web.full.export.PrintPreviewW;
 import org.geogebra.web.full.gui.GuiManagerW;
 import org.geogebra.web.full.gui.components.ComponentInputDialog;
-import org.geogebra.web.full.gui.dialog.image.UploadImageDialog;
+import org.geogebra.web.full.gui.dialog.image.ImageDialog;
 import org.geogebra.web.full.gui.dialog.image.UploadImagePanel;
 import org.geogebra.web.full.gui.dialog.image.WebcamInputDialog;
 import org.geogebra.web.full.gui.dialog.template.TemplateChooser;
@@ -277,9 +277,9 @@ public class DialogManagerW extends DialogManager
 			upload.click();
 			return;
 		}
-		UploadImageDialog imageDialog = device.getImageInputDialog(app);
-		imageDialog.setLocation(corner);
-		imageDialog.show();
+		DialogData data = new DialogData("Image", "Cancel", null);
+		ImageDialog dialog = new ImageDialog(app, data);
+		dialog.show();
 	}
 
 	/**
@@ -444,9 +444,9 @@ public class DialogManagerW extends DialogManager
 
 	/**
 	 * @param doYouWantSaveChanges true if doYooWantToSaveYourChangesDialog
-	 * 		should be shown
+	 *        should be shown
 	 * @param addTempCheckBox
-	 * 	    true if checkbox should be visible
+	 *        true if checkbox should be visible
 	 * @return {@link SaveDialogI}
 	 */
 	public SaveDialogI getSaveDialog(boolean doYouWantSaveChanges, boolean addTempCheckBox) {
