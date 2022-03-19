@@ -4,6 +4,7 @@
 
     function ggbAppletOnLoad(id){
         window.parent.postMessage("{\"action\":\"appletOnLoad\"}","*");
+        console.log("LOADED")
     }
 
     function loadFontScript(basePath) {
