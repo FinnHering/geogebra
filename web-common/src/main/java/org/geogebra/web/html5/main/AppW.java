@@ -279,7 +279,9 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 					getAppletParameters().getParamScaleContainerClass()),
 					this::checkScaleContainer);
 		}
-		initializeAnalytics();
+		if (getAppletParameters().getDataParamApp()) {
+			initializeAnalytics();
+		}
 	}
 
 	/**
@@ -833,8 +835,8 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 			if (def.hasDefaults3d()) {
 				getXMLio().processXMLString(def.getDefaults3d(), false, true);
 			}
-			afterLoadFileAppOrNot(asSlide);
 
+			afterLoadFileAppOrNot(asSlide);
 		} catch (Exception e) {
 			Log.debug(e);
 		}
@@ -3167,8 +3169,7 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 	}
 
 	@Override
-	public void exportStringToFile(String extension, String content) {
-
+	public void exportStringToFile(String extension, String content, boolean showDialog) {
 		String url;
 
 		if ("html".equals(extension)) {
@@ -3180,8 +3181,15 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 		}
 
 		dispatchEvent(new Event(EventType.OPEN_DIALOG, null, "export3D"));
-		getFileManager().showExportAsPictureDialog(url, getExportTitle(),
-				extension, "Export", this);
+		if (showDialog) {
+			getFileManager().showExportAsPictureDialog(url, getExportTitle(),
+					extension, "Export", this);
+		} else {
+			getFileManager().exportImage(url,  getExportTitle() + "." + extension,
+					extension);
+			dispatchEvent(new Event(EventType.EXPORT, null,
+					"[\"" + extension + "\"]"));
+		}
 	}
 
 	/**
@@ -3493,7 +3501,7 @@ public abstract class AppW extends App implements SetLabels, HasLanguage {
 		try {
 			Analytics.setInstance(new AnalyticsW());
 		} catch (Throwable e) {
-			Log.debug("Could not initialize analytics object.");
+			Log.debug("Could not initialize analytics object." + e);
 		}
 	}
 
